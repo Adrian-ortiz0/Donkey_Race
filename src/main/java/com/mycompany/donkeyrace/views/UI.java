@@ -28,6 +28,9 @@ public class UI {
             } else if (input == 1){
                 BurrosUI bu = new BurrosUI();
                 bu.menuBurros();
+            } else if(input == 2){
+                ParticipantesUI pu = new ParticipantesUI();
+                pu.menuParticipantes();
             }
         }
     }

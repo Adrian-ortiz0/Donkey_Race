@@ -16,6 +16,10 @@ public class Participante {
         this.cedula = cedula;
         this.saldoDisponible = saldoDisponible;
     }
+    
+    public void recargarSaldo(double saldo){
+        this.saldoDisponible += saldo;
+    }
 
     public int getId() {
         return id;
