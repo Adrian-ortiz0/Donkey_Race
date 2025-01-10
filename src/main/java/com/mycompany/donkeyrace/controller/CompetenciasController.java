@@ -14,6 +14,22 @@ import java.util.logging.Logger;
 
 public class CompetenciasController {
     
+    public static boolean asignarGanador(Competencia competencia, Burro burro){
+        CRUD.setConexion(ConnectionDB.getConnection());
+        String sql = "UPDATE competencias SET ID_Ganador = ? WHERE ID = ? AND Estado = 'Finalizada'";
+        Object [] params = {
+            burro.getId(),
+            competencia.getId()
+        };
+        return CRUD.updateDB(sql, params);
+    }
+    
+    public static boolean finalizarCompetencia(Competencia competencia){
+        CRUD.setConexion(ConnectionDB.getConnection());
+        String sql = "UPDATE competencias SET Estado = 'Finalizada' WHERE ID = ? AND Estado = 'Programada';";
+        return CRUD.updateDB(sql, competencia.getId());
+    }
+    
     public static ArrayList<Burro> listarBurrosPorCompetencia(int idCompetencia) {
     CRUD.setConexion(ConnectionDB.getConnection());
     String sql = "SELECT b.ID, b.Nombre, b.Edad, b.Raza " +

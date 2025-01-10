@@ -107,6 +107,35 @@ public class CompetenciasUI {
                         System.out.println("Error en registro!");
                     }
                 }
+            } else if(input == 4){
+                ArrayList<Competencia> competencias = CompetenciasController.listarCompetencias();
+                if (competencias.isEmpty()) {
+                    System.out.println("No hay competencias registradas.");
+                    return;
+                } else {
+                    for (int i = 0; i < competencias.size(); i++) {
+                        Competencia competencia = competencias.get(i);
+                        System.out.println((i + 1) + ". " + "| Fecha: " + competencia.getFecha() + " | Lugar: " + competencia.getLugar());
+                        System.out.println("------------------------");
+                    }
+                    int eleccionCompetencia = Integer.parseInt(scanner.nextLine());
+                    Competencia competenciaSeleccionada = competencias.get(eleccionCompetencia - 1);
+                    boolean competenciaFinalizada = CompetenciasController.finalizarCompetencia(competenciaSeleccionada);
+                    if(competenciaFinalizada){
+                        System.out.println("La competencia finalizo exitosamente");
+                        System.out.println("Cual fue el ganador de la carrera? ");
+                        ArrayList<Burro> burrosCompetencia = CompetenciasController.listarBurrosPorCompetencia(competenciaSeleccionada.getId());
+                            for(int i = 0; i < burrosCompetencia.size(); i++){
+                                Burro burro = burrosCompetencia.get(i);
+                                System.out.println((i + 1) + ". " + burro.getNombre() + " | Edad: " + burro.getEdad() + " | Raza: " + burro.getRaza());
+                            }
+                            int eleccionBurro = Integer.parseInt(scanner.nextLine());
+                            Burro burroElegido = burrosCompetencia.get(eleccionBurro - 1);
+                            CompetenciasController.asignarGanador(competenciaSeleccionada, burroElegido);
+                    } else {
+                        System.out.println("Error al finalizar la competencia");
+                    }
+                }
             }
         }
     }
