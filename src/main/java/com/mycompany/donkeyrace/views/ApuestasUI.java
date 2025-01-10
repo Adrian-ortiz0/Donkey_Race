@@ -56,8 +56,13 @@ public class ApuestasUI {
                             }
                             int eleccionCompetencia = Integer.parseInt(scanner.nextLine());
                             Competencia competenciaSeleccionada = competencias.get(eleccionCompetencia - 1);
+                            System.out.println("Competencia seleccionada: " + competenciaSeleccionada.getId() + " Lugar: " + competenciaSeleccionada.getLugar());
                             System.out.println("Seleccione el burro por el que desea apostar: ");
                             ArrayList<Burro> burrosCompetencia = CompetenciasController.listarBurrosPorCompetencia(competenciaSeleccionada.getId());
+                            if(burrosCompetencia.isEmpty()){
+                                System.out.println("No hay burros en esta competencia");
+                                return;
+                            }
                             for (int i = 0; i < burrosCompetencia.size(); i++) {
                                 Burro burro = burrosCompetencia.get(i);
                                 System.out.println((i + 1) + ". " + burro.getNombre() + " | Edad: " + burro.getEdad() + " | Raza: " + burro.getRaza());

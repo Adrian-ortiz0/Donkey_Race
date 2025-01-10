@@ -86,6 +86,7 @@ public class CompetenciasUI {
                 }
                 int eleccionBurro = Integer.parseInt(scanner.nextLine());
                 Burro burroSeleccionado = burroList.get(eleccionBurro - 1);
+                System.out.println("Burro seleccionado: " + burroSeleccionado.getNombre());
                 
                 System.out.println("Seleccione en que competencia inscribira al burro: ");
                 ArrayList<Competencia> competencias = CompetenciasController.listarCompetenciasProgramadas();
@@ -100,9 +101,13 @@ public class CompetenciasUI {
                     }
                     int eleccionCompetencia = Integer.parseInt(scanner.nextLine());
                     Competencia competenciaSeleccionada = competencias.get(eleccionCompetencia - 1);
-                    boolean registro = CompetenciasController.registrarBurrosACompetencias(competenciaSeleccionada, burroSeleccionado);
+                    
+                    System.out.println("Competencia seleccionada: " + competenciaSeleccionada.getId() + " Lugar: " + competenciaSeleccionada.getLugar());
+                    boolean registro = CompetenciasController.registrarBurrosACompetencias(burroSeleccionado, competenciaSeleccionada);
+                    competenciaSeleccionada.setCapacidad(competenciaSeleccionada.getCapacidad() + 1);
                     if(registro){
                         System.out.println("Burro registrado con exito!");
+                        CompetenciasController.ocuparCapacidad(competenciaSeleccionada);
                     } else {
                         System.out.println("Error en registro!");
                     }
@@ -120,6 +125,10 @@ public class CompetenciasUI {
                     }
                     int eleccionCompetencia = Integer.parseInt(scanner.nextLine());
                     Competencia competenciaSeleccionada = competencias.get(eleccionCompetencia - 1);
+                    if(competenciaSeleccionada.getCapacidad() > 2){
+                        System.out.println("No se puede finalizar la competencia porque solo hay un competidor");
+                        return;
+                    }
                     boolean competenciaFinalizada = CompetenciasController.finalizarCompetencia(competenciaSeleccionada);
                     if(competenciaFinalizada){
                         System.out.println("La competencia finalizo exitosamente");

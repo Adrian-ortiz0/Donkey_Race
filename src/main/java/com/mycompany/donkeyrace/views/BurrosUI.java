@@ -23,6 +23,7 @@ public class BurrosUI {
             System.out.println("2. Editar");
             System.out.println("3. Listar");
             System.out.println("4. Eliminar");
+            System.out.println("5. Ver Resultados de los burros");
             System.out.println("0. Salir");
             int input = Integer.parseInt(scanner.nextLine());
             if (input == 0) {
@@ -165,6 +166,19 @@ public class BurrosUI {
                 int idBurro = burroSeleccionado.getId();
                 BurrosController.eliminarBurro(idBurro);
                 System.out.println("Burro eliminado con exito!");
+            } else if(input == 5){
+                System.out.println("Ingrese la cedula del dueño: ");
+                String cedula = scanner.nextLine();
+                System.out.println("Selecciona un burro para ver informacion: ");
+
+                ArrayList<Burro> burroList = BurrosController.mostrarBurrosDeDueño(cedula);
+                    for (int i = 0; i < burroList.size(); i++) {
+                    Burro burro = burroList.get(i);
+                    System.out.println((i + 1) + ". " + burro.getNombre());
+                }
+                int eleccionBurro = Integer.parseInt(scanner.nextLine());
+                Burro burroSeleccionado = burroList.get(eleccionBurro - 1);
+                int idBurro = burroSeleccionado.getId();
             }
         }
     }
