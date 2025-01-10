@@ -14,6 +14,21 @@ import java.util.logging.Logger;
 
 public class CompetenciasController {
     
+//    public static ArrayList<Competencia> listarCompetenciasDelBurro(Burro burro){
+//        CRUD.setConexion(ConnectionDB.getConnection());
+//        String sql = "SELECT cb.ID, cb.ID_Burro, b.nombre AS nombre_burro, ";
+//    }
+//    
+    public static boolean ocuparCapacidad(Competencia competencia){
+        CRUD.setConexion(ConnectionDB.getConnection());
+        String sql = "UPDATE competencias set Capacidad = ? WHERE ID = ?";
+        Object [] params = {
+          competencia.getCapacidad(),
+          competencia.getId()
+        };
+        return CRUD.updateDB(sql, params);
+    }
+    
     public static boolean asignarGanador(Competencia competencia, Burro burro){
         CRUD.setConexion(ConnectionDB.getConnection());
         String sql = "UPDATE competencias SET ID_Ganador = ? WHERE ID = ? AND Estado = 'Finalizada'";
@@ -54,12 +69,13 @@ public class CompetenciasController {
     return burros;
 }
 
-    public static boolean registrarBurrosACompetencias(Competencia competencia, Burro burro){
+    public static boolean registrarBurrosACompetencias(Burro burro, Competencia competencia ){
         CRUD.setConexion(ConnectionDB.getConnection());
         String sql = "insert into competencias_burros (ID_Burro, ID_Competencia) VALUES (?, ?);";
         Object [] params = {
-            competencia.getId(),
-            burro.getId()
+            burro.getId(),
+            competencia.getId()
+            
         };
         return CRUD.insertarDB(sql, params);
     }
@@ -75,7 +91,7 @@ public class CompetenciasController {
     }
     public static ArrayList<Competencia> listarCompetenciasProgramadas(){
         CRUD.setConexion(ConnectionDB.getConnection());
-        String sql = "select ID, Fecha, Lugar, Estado from competencias where Estado = 'Programada'";
+        String sql = "select ID, Fecha, Lugar, Estado, Capacidad from competencias where Estado = 'Programada'";
         ArrayList<Competencia> competencias = new ArrayList();
         Competencia competencia = null;
         ResultSet rs = CRUD.consultarDB(sql);
@@ -87,11 +103,13 @@ public class CompetenciasController {
                 LocalDate fecha = fechaSql.toLocalDate();
                 String lugar = rs.getString("Lugar");
                 String estado = rs.getString("Estado");
+                int capacidad = rs.getInt("Capacidad");
                 
                 competencia.setEstado(estado);
                 competencia.setId(id);
                 competencia.setFecha(fecha);
                 competencia.setLugar(lugar);
+                competencia.setCapacidad(capacidad);
                 
                 competencias.add(competencia);
             }

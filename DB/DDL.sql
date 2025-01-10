@@ -30,9 +30,9 @@ create table if not exists competencias(
 	Lugar varchar(100) not null,
     Estado ENUM("Programada", "Finalizada", "Cancelada") default "Programada",
     ID_Ganador int,
+    Capacidad int default 0,
     foreign key (ID_Ganador) references burros(ID)
 );
-
 
 create table if not exists competencias_burros (
 	ID int primary key auto_increment,

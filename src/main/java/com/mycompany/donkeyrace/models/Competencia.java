@@ -9,6 +9,7 @@ public class Competencia {
     private String lugar;
     private String estado;
     private Burro ganador;
+    private int capacidad;
 
     public Competencia() {
     }
@@ -19,6 +20,14 @@ public class Competencia {
         this.lugar = lugar;
         this.estado = estado;
         this.ganador = ganador;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
     public Burro getGanador() {
