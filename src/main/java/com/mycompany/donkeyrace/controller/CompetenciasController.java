@@ -54,8 +54,6 @@ public class CompetenciasController {
     return burros;
 }
 
-
-    
     public static boolean registrarBurrosACompetencias(Competencia competencia, Burro burro){
         CRUD.setConexion(ConnectionDB.getConnection());
         String sql = "insert into competencias_burros (ID_Burro, ID_Competencia) VALUES (?, ?);";
